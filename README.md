@@ -19,9 +19,8 @@ This project is designed to execute for IoT device. Therefore, the project needs
 
 ## Library Required
 Library Required in the project
-* socket.io
 * johnny-five
 * firebase-admin
 * firebase-tools
-* file service
-* http
+
+
