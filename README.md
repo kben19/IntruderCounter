@@ -17,6 +17,10 @@ This project is designed to execute for IoT device. Therefore, the project needs
 * Motion Sensor
 * Jumper Cables
 
+## Digital pins on Arduino Board
+Digital pin used to connect Led is pin 13
+Digital pin used to connect the motion sensor is pin 2
+
 ## Platform//architecture
 * Node js
 * Firebase
@@ -29,10 +33,6 @@ Library Required in the project
 * johnny-five
 * firebase-admin
 * firebase-tools
-
-## Digital pins on Arduino Board
-Digital pin used to connect Led is pin 13
-Digital pin used to connect the motion sensor is pin 2
 
 ## Functions
 The client can invoke several functions, these are:
@@ -48,3 +48,5 @@ No bugs were detected during testing.
 
 ## Assumptions
 The server does not handle multiple sessions, there is only one client.
+
+If the client restart(refresh) during the middle of intruder calculations, it must be able to fetch old data from the server and find the total number of intruders and still be able to perform all functionalities required in the project scope.
