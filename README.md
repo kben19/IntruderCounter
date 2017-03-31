@@ -36,11 +36,12 @@ Library Required in the project
 
 ## Functions
 The client can invoke several functions, these are:
-Displaying data fetched from Firebase Realtime DB.
-Switching on/off the LED
-Switching on/off the PIR motion sensor
-Measuring length of movement and distinguishes whether it's a long motion or short motion.
-Clearing all stored data in Firebase Realtime DB.
+
+* Displaying data fetched from Firebase Realtime DB.
+* Switching on/off the LED
+* Switching on/off the PIR motion sensor
+* Measuring length of movement and distinguishes whether it's a long motion or short motion.
+* Clearing all stored data in Firebase Realtime DB.
 
 
 ## Known bugs
