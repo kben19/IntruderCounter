@@ -1,0 +1,140 @@
+<html>
+	<head>
+		<title> IoT Control Panel </title>
+		<style>
+		table {
+			width:50%;
+			text-align: center;
+		}
+		table#t00 th {
+			background-color: black;
+			color: white;
+			padding: 15px;
+		}
+		
+		.onoffswitch {
+			position: relative; width: 63px;
+			-webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+		}
+		.onoffswitch-checkbox {
+			display: none;
+		}
+		.onoffswitch-label {
+			display: block; overflow: hidden; cursor: pointer;
+			border: 2px solid #999999; border-radius: 20px;
+		}
+		.onoffswitch-inner {
+			display: block; width: 200%; margin-left: -100%;
+			transition: margin 0.3s ease-in 0s;
+		}
+		.onoffswitch-inner:before, .onoffswitch-inner:after {
+			display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
+			font-size: 13px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+			box-sizing: border-box;
+		}
+		.onoffswitch-inner:before {
+			content: "ON";
+			padding-left: 5px;
+			background-color: #34A7C1; color: #FFFFFF;
+		}
+		.onoffswitch-inner:after {
+			content: "OFF";
+			padding-right: 5px;
+			background-color: #EEEEEE; color: #999999;
+			text-align: right;
+		}
+		.onoffswitch-switch {
+			display: block; width: 15px; margin: 2.5px;
+			background: #FFFFFF;
+			position: absolute; top: 0; bottom: 0;
+			right: 39px;
+			border: 2px solid #999999; border-radius: 20px;
+			transition: all 0.3s ease-in 0s; 
+		}
+		.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+			margin-left: 0;
+		}
+		.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+			right: 0px; 
+		}		
+	</style>
+	</head>
+	<body>
+	
+		<h1 align="center"> IoT Control Panel</h1>
+		<table id="t00" align="center" border="1" cellpading="0" cellspacing="0" style="border-collapse:collapse;">
+		<tr>
+			<th colspan="2">Control Panel</th>
+		</tr>
+		<tr>
+			<td>Switch LED On/Off</td>
+			<td>
+			<div class="onoffswitch">
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="LED">
+				<label class="onoffswitch-label" for="LED">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label>
+			</div>			
+			</td>
+		</tr>
+		<tr>
+			<td>Switch Sensor On/Off</td>
+			<td>
+			<div class="onoffswitch">
+				<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="Sensor">
+				<label class="onoffswitch-label" for="Sensor">
+					<span class="onoffswitch-inner"></span>
+					<span class="onoffswitch-switch"></span>
+				</label>
+			</div>			
+			</td>
+		</tr>
+		<tr>
+			<td>Motion Detected</td>
+			<td>
+				<div id="motion">0</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Long Motions</td>
+			<td>
+				<div id="long">0</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Short Motions</td>
+			<td>
+				<div id="short">0</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Intruder Motions</td>
+			<td>
+				<div id="intruder">0</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Reset Database</td>
+			<td>
+				<button id="resetButton">Reset</button>
+			</td>
+		</tr>
+		</table>
+		
+		<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+		<script>
+		  // Initialize Firebase
+		  var config = {
+			apiKey: "AIzaSyB_ITXa4IeXPBkRof6ELjkBktpI7X5Cnrw",
+			authDomain: "intruder-counter.firebaseapp.com",
+			databaseURL: "https://intruder-counter.firebaseio.com",
+			projectId: "intruder-counter",
+			storageBucket: "intruder-counter.appspot.com",
+			messagingSenderId: "317197531827"
+		  };
+		  firebase.initializeApp(config);
+		</script>
+		<script src="./firebaseWebApi.js"></script>
+	</body>
+</html>
