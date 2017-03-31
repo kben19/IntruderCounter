@@ -18,8 +18,8 @@ This project is designed to execute for IoT device. Therefore, the project needs
 * Jumper Cables
 
 ## Digital pins on Arduino Board
-Digital pin used to connect Led is pin 13
-Digital pin used to connect the motion sensor is pin 2
+* Digital pin used to connect Led is pin 13
+* Digital pin used to connect the motion sensor is pin 2
 
 ## Platform//architecture
 * Node js
