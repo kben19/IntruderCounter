@@ -2,8 +2,8 @@ var admin = require("firebase-admin");
 var serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://intruder-counter.firebaseio.com"
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: "https://intruder-counter.firebaseio.com"
 });
 
 var db = admin.database();
@@ -49,14 +49,12 @@ board.on("ready", function() {
 					time_detected: timeDetected
 						
 				});
-				intruderString += "L";
-						
+				intruderString += "L";		
 			}else{
 				motionRef.push({
 					id: idVar,
 					type:'shortMotion',
-					time_detected: timeDetected
-						
+					time_detected: timeDetected	
 				});
 				intruderString += "S";
 			}

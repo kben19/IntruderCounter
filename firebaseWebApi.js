@@ -7,11 +7,11 @@ function Fit3140() {
 	this.sensorSwitch = document.getElementById('Sensor');
 	this.resetButton = document.getElementById('resetButton');
 	this.idVal = 0;
-	
+
 	this.ledSwitch.addEventListener('change', this.saveLedData.bind(this));
 	this.sensorSwitch.addEventListener('change', this.saveSensorData.bind(this));
 	this.resetButton.addEventListener('click', this.resetDatabase.bind(this));
-  
+
 	this.initFirebase();
 	this.loadMotionData();
 }
@@ -36,22 +36,22 @@ function Fit3140() {
 
     // Loads the last 50 messages and listen for new ones.
     var setData = function (data) {
-      var val = data.val();
-      totalMotion += 1;
-	  this.motionText.innerText = totalMotion;
-	  if (val.type == 'longMotion'){
+		var val = data.val();
+		totalMotion += 1;
+		this.motionText.innerText = totalMotion;
+		if (val.type == 'longMotion'){
 		longMotion += 1;
 		this.longMotionText.innerText = longMotion;
-	  }
-	  else if (val.type == 'shortMotion') {
+		}
+		else if (val.type == 'shortMotion') {
 		shortMotion += 1;
 		this.shortMotionText.innerText = shortMotion;
-	  }
-	  else{
+		}
+		else{
 		  intruderMotion += 1;
 		  this.intruderMotionText.innerText = intruderMotion;
-	  }
-	  console.log(val.type + " added.");
+		}
+		console.log(val.type + " added.");
     }.bind(this);
 	
 	var setSwitch = function(data) {
@@ -97,17 +97,17 @@ function Fit3140() {
 	this.idVal += 1;
 	if (this.ledSwitch.checked) {
 		this.switchRef.push({
-		  id: this.idVal,
-		  action: 'on',
-		  type: 'led',
-		  time: Date.now()
+			id: this.idVal,
+			action: 'on',
+			type: 'led',
+			time: Date.now()
 		});
 	}else {
 		this.switchRef.push({
-		  id: this.idVal,
-		  action: 'off',
-		  type: 'led',
-		  time: Date.now()
+			id: this.idVal,
+			action: 'off',
+			type: 'led',
+			time: Date.now()
 		});
 	}
   };
@@ -116,17 +116,17 @@ function Fit3140() {
 	this.idVal += 1;
 	if (this.sensorSwitch.checked){
 		this.switchRef.push({
-		  id: this.idVal,
-		  action: 'on',
-		  type: 'sensor',
-		  time: Date.now()
+			id: this.idVal,
+			action: 'on',
+			type: 'sensor',
+			time: Date.now()
 		});
 	}else{
 		this.switchRef.push({
-		  id: this.idVal,
-		  action: 'off',
-		  type: 'sensor',
-		  time: Date.now()
+			id: this.idVal,
+			action: 'off',
+			type: 'sensor',
+			time: Date.now()
 		});
 	}
   };
@@ -138,5 +138,5 @@ function Fit3140() {
 
 
 window.onload = function () {
-  window.Fit3140 = new Fit3140();
+	window.Fit3140 = new Fit3140();
 };
