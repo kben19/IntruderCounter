@@ -6,10 +6,10 @@ admin.initializeApp({
 	databaseURL: "https://intruder-counter.firebaseio.com"
 });
 
-var db = admin.database();
+var db = admin.database();                  // reference the database
 
-var motionRef = db.ref("motionSensorData"); // channel name
-var switchRef = db.ref("switchData");
+var motionRef = db.ref("motionSensorData"); // channel for motion sensor data
+var switchRef = db.ref("switchData");       // channel for on/off switch data
 
 var jfive = require("johnny-five");  
 
@@ -20,7 +20,7 @@ board.on("ready", function() {
     var led = new jfive.Led(13);                                                          
     var motion = new jfive.Motion(2);     
     var timer = 0; 	
-	var intruderString = "";
+	var intruderString = "";                                //used to check if pattern == LSLL             
 	var idVar = 0;
 	var motionVal = false;
 	var motStart = false;
@@ -30,8 +30,8 @@ board.on("ready", function() {
 		timer++;
     }, 1000);
 	
-	motion.on("motionstart", function(){                                                //starts timer when motion detected                                               
-		if (motionVal && motStart == false){
+	motion.on("motionstart", function(){                     //starts timer when motion detected                                               
+		if (motionVal && motStart == false){             //moStart indicates whether motion has started
 			motStart = true;
 			timer = 0;
 			console.log('Motion Start');
@@ -43,24 +43,24 @@ board.on("ready", function() {
 			console.log('Motion Ended');
 			var timeDetected = timer; 
 			if (timeDetected > 8) {
-				motionRef.push({
+				motionRef.push({                     //if long motion, pushing motion data on to firebase
 					id: idVar,
 					type:'longMotion',
 					time_detected: timeDetected
 						
 				});
-				intruderString += "L";		
+				intruderString += "L";	             //appending to string	
 			}else{
-				motionRef.push({
+				motionRef.push({                     //if short motion, do similar things like above for long motion               
 					id: idVar,
 					type:'shortMotion',
 					time_detected: timeDetected	
 				});
 				intruderString += "S";
 			}
-			if (intruderString == intruder){
+			if (intruderString == intruder){             //checking if pattern == LSLL
 				idVar += 1;
-				motionRef.push({
+				motionRef.push({                     //if it is, upload intruder related data onto firebase                     
 					id: idVar,
 					type:'intruderMotion',
 					time_detected: timeDetected
@@ -70,14 +70,14 @@ board.on("ready", function() {
 				intruderString = intruderString.substring(intruderString.length-1, intruderString.length);
 			}
 			idVar += 1;
-			motStart = false;
+			motStart = false;                             //motStart is false as motion has ended
 		}		
 	});
 	
-	switchRef.on('child_added', function(data){
+	switchRef.on('child_added', function(data){                   //listen to data under node Switch, every time something new is added
 		var value = data.val();
 		idVar = value.id;
-		if (value.type == 'led'){
+		if (value.type == 'led'){                             //if it's data about led switch, turn on/off led switch
 			if(value.action == 'on'){
 				led.on();
 			}else{
@@ -85,7 +85,7 @@ board.on("ready", function() {
 			}
 			console.log("LED turned " + value.action);
 		}else{
-			if(value.action == 'on'){
+			if(value.action == 'on'){                     //if it's data about motion sensor,turn on/off motion sensor
 				motionVal = true;
 			}else{
 				motionVal = false;
@@ -95,12 +95,12 @@ board.on("ready", function() {
 		}	
 	});
 	
-	switchRef.on('child_removed', function(data){
-		led.off();
+	switchRef.on('child_removed', function(data){                 //If client reset, remove all children under switchRef
+		led.off();                                            //resetting variables 
 		motionVal = false;
 		motStart = false;
 		idVar = 0;
 		console.log("Data resetted");
 	});
 		
-});	 //for board		
+});	 	
