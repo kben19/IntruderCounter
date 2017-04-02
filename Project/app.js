@@ -100,6 +100,7 @@ board.on("ready", function() {
 		motionVal = false;
 		motStart = false;
 		idVar = 0;
+		intruderString = "";
 		console.log("Data resetted");
 	});
 		
