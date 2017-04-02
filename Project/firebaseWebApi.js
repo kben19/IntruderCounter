@@ -12,29 +12,29 @@ function Fit3140() {
 	this.sensorSwitch.addEventListener('change', this.saveSensorData.bind(this));
 	this.resetButton.addEventListener('click', this.resetDatabase.bind(this));
 
-	this.initFirebase();
+	this.initFirebase();                  
 	this.loadMotionData();
 }
-
+  //initialising firebase
   Fit3140.prototype.initFirebase = function () {
     this.database = firebase.database();
     this.storage = firebase.storage();
   };
 
-
+  //load default values
   Fit3140.prototype.loadMotionData = function () {
 	var totalMotion = 0;
 	var longMotion = 0;
 	var shortMotion = 0;
 	var intruderMotion = 0;
-    // Reference to the /messages/ database path.
+    // Reference to motion sensor and switch data
     this.motionSensorRef = this.database.ref('motionSensorData');
 	this.switchRef = this.database.ref('switchData');
     // Make sure we remove all previous listeners.
     this.motionSensorRef.off();
 	this.switchRef.off();
 
-    // Loads the last 50 messages and listen for new ones.
+    // calculating # of different types of motions to be displayed on client side
     var setData = function (data) {
 		var val = data.val();
 		totalMotion += 1;
@@ -53,7 +53,7 @@ function Fit3140() {
 		}
 		console.log(val.type + " added.");
     }.bind(this);
-	
+	//turning on/off led and motion switches
 	var setSwitch = function(data) {
 		var val = data.val();
 		if (val.type == 'led'){
@@ -72,6 +72,7 @@ function Fit3140() {
 		console.log(val.type + " " + val.action + " added")
 	}.bind(this);
 	
+	//resetting client side data
 	var resetData = function() {
 		this.ledSwitch.checked = false;
 		this.sensorSwitch.checked = false;
@@ -85,14 +86,14 @@ function Fit3140() {
 		intruderMotion = 0;
 		this.idVal = 0;
 	}.bind(this);
-	
+    //establish listerners listening to different events	
     this.motionSensorRef.on('child_added', setData);
     this.motionSensorRef.on('child_changed', setData);
 	this.switchRef.on('child_added', setSwitch);
 	this.switchRef.on('child_changed', setSwitch);
 	this.switchRef.on('child_removed', resetData);
   };
-  
+  //pushing led switch data onto firebase
   Fit3140.prototype.saveLedData = function() {
 	this.idVal += 1;
 	if (this.ledSwitch.checked) {
@@ -111,7 +112,7 @@ function Fit3140() {
 		});
 	}
   };
-  
+  //pushing sensor switch data onto firebase
   Fit3140.prototype.saveSensorData = function() {
 	this.idVal += 1;
 	if (this.sensorSwitch.checked){
@@ -130,7 +131,7 @@ function Fit3140() {
 		});
 	}
   };
-  
+  //resetting the database,deleting everything
   Fit3140.prototype.resetDatabase = function() {
 	this.motionSensorRef.remove();
 	this.switchRef.remove();
